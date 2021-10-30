@@ -39,6 +39,7 @@ show_loc = os.getenv('INPUT_SHOW_LINES_OF_CODE')
 show_days_of_week = os.getenv('INPUT_SHOW_DAYS_OF_WEEK')
 showLanguagePerRepo = os.getenv('INPUT_SHOW_LANGUAGE_PER_REPO')
 showLocChart = os.getenv('INPUT_SHOW_LOC_CHART')
+showThisWeek = os.getenv('INPUT_SHOW_THIS_WEEK')
 show_profile_view = os.getenv('INPUT_SHOW_PROFILE_VIEWS')
 show_short_info = os.getenv('INPUT_SHOW_SHORT_INFO')
 locale = os.getenv('INPUT_LOCALE')
@@ -95,6 +96,7 @@ get_loc_url = Template("""/repos/$owner/$repo/stats/code_frequency""")
 get_profile_view = Template("""/repos/$owner/$repo/traffic/views?per=week""")
 get_profile_traffic = Template("""/repos/$owner/$repo/traffic/popular/referrers""")
 truthy = ['true', '1', 't', 'y', 'yes']
+falsy = ['false','0','f','n','no']
 
 
 def run_v3_api(query):
@@ -308,8 +310,8 @@ def get_waka_time_stats():
             empty = False
             stats = stats + generate_commit_list(tz=data['data']['timezone']) + '\n\n'
 
-        stats += '📊 **' + translate['This Week I Spend My Time On'] + '** \n\n'
-        stats += '```text\n'
+        if showThisWeek.lower() in falsy:
+            return ""
         if showTimeZone.lower() in truthy:
             empty = False
             tzone = data['data']['timezone']
