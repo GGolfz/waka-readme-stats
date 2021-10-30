@@ -36,6 +36,11 @@ inputs:
     required: false
     description: "Shows the number of commit graph in the dev metrics"
     default: "True"
+    
+  SHOW_THIS_WEEK:
+    required: false
+    description: "Shows this week content"
+    default: "True" 
 
   SHOW_LANGUAGE:
     required: false
